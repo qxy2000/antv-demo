@@ -21,17 +21,52 @@ export const renderRadar = ({ container, width, height }) => {
   chart.coordinate({ type: 'polar' });
   chart
   .data(RadarData)
-  .scale('x', { padding: 0.5, align: 0 })
+  .scale('x', { padding: 0.5, align: 0})
   .scale('y', { tickCount: 5 })
-  .axis('x', { grid: true })
-  .axis('y', { zIndex: 1, title: false });
+  // .axis('x', { grid: true })
+  .axis('x', {
+    // labelFill: '#fff',
+    // titleFill: '#fff',
+    grid: true,
+    labelFill: 'black',
+    titleFill: 'black',
+    gridStroke: 'black',
+    // gridLineWidth: 5,
+    labelFontSize: 10,
+    title: false,
+    labelFontWeight: 'bold',
+    gridStrokeOpacity: 1
+    // tickOpacity: 0,
+  })
+  // .axis('y', { zIndex: 1, title: false })
+  .axis('y', {
+    zIndex: 1,
+    title: false,
+    labelFill: 'black',
+    titleFill: 'black',
+    labelFontSize: 10,
+    title: false,
+    labelFontWeight: 'bold',
+    // tickOpacity: 0,
+    grid: true,
+    gridStroke: 'black',
+    gridStrokeOpacity: 1
+    // gridLineWidth: 5
+  });
+
+  
 
 chart
   .area()
   .encode('x', 'item')
   .encode('y', 'score')
   .encode('shape', 'smooth')
-  .style('fillOpacity', 0.5);
+  .style({
+    fillOpacity: 0.5,
+    color: "#93420A"
+  });
+
+chart.theme({ defaultColor: '#93420A' });
 
 chart
   .line()
@@ -39,6 +74,7 @@ chart
   .encode('y', 'score')
   .encode('shape', 'smooth')
   .style('lineWidth', 2);
+
 
   // chart.data(RadarData).coordinate({ type: 'polar' });
 
@@ -123,8 +159,11 @@ export const renderWordCloud = ({ container, width, height }) => {
     .style('textAlign', 'center')
     .scale('x', { domain: [9, width], range: [0, 1] })
     .scale('y', { domain: [0, height], range: [0, 1] })
+    // .scale('color', {
+    //   range: ThemeColor10,
+    // })
     .scale('color', {
-      range: ThemeColor10,
+      range: ['#B5A488', '#D29634', '#8D7434', '#A39F58', '#8C7E5B', '#985D31', '#86653A'],
     })
     .axis(false)
     .scale('fontSize', { type: 'identity' })
@@ -174,22 +213,29 @@ export const renderSkills = ({ container, width, height }) => {
     .encode('y', 'value')
     .encode('color', 'type')
     .encode('size', 20)
+    // .scale('color', {
+    //   range: ThemeColor10,
+    // })
     .scale('color', {
-      range: ThemeColor10,
+      range: ['#D29634', '#985D31', '#86653A', '#8D7434', '#A39F58', '#8C7E5B', '#B5A488'],
     })
     .scale('y', { nice: true })
     .scale('x', { padding: 0.25 })
     .axis('x', {
-      labelFill: '#fff',
-      titleFill: '#fff',
+      // labelFill: '#fff',
+      // titleFill: '#fff',
+      labelFill: 'black',
+      titleFill: 'black',
       labelFontSize: 10,
       title: false,
       labelFontWeight: 'bold',
       tickOpacity: 0,
     })
     .axis('y', {
-      labelFill: '#fff',
-      titleFill: '#fff',
+      // labelFill: '#fff',
+      // titleFill: '#fff',
+      labelFill: 'black',
+      titleFill: 'black',
       labelFontSize: 10,
       title: false,
       tickOpacity: 0,
@@ -301,12 +347,14 @@ export const renderRelation = ({ container }) => {
       labelCfg: {
         style: {
           background: {
-            fill: '#ffffff',
+            // fill: '#ffffff',
+            // fill: '#93420A',
             // stroke: 'green',
             padding: [3, 2, 3, 2],
             radius: 2,
             lineWidth: 3,
           },
+          // stroke: '#93420A',
         },
       }
     },

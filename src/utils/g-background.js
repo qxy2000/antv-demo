@@ -2,7 +2,8 @@ import { Canvas, CanvasEvent, Path } from '@antv/g';
 import { Renderer as CanvasRenderer } from '@antv/g-canvas';
 
 export const DefaultPathStyle = {
-  lineWidth: 4,
+  // lineWidth: 4,
+  lineWidth: 0,
   lineJoin: 'round',
   stroke: '#54BECC',
   shadowColor: '#54BECC',

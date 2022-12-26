@@ -12,7 +12,10 @@ import { Profile } from './components/profile';
 
 import styles from './style.module.scss';
 
-const sliderWidth = 300;
+// const sliderWidth = 300;
+const sliderWidth = 350;
+const sliderWidthRight = 300;
+const centerWidth = 895;
 
 export const Home = () => {
   const containerRef = React.useRef(null);
@@ -125,7 +128,7 @@ export const Home = () => {
     <div className={styles.container} ref={containerRef}>
       {height && backgrounds.length > 0 && (
         <React.Fragment>
-          <div className={styles.left} style={{ width: sliderWidth }}>
+          <div className={styles.left} style={{ width: sliderWidth,marginLeft: "50px" }}>
             <Profile
               title="个人介绍"
               cardImage={backgrounds[0]}
@@ -133,7 +136,7 @@ export const Home = () => {
               titleStyle={{
                 marginTop: 6,
               }}
-              cardStyle={{ height: height / 2 }}
+              cardStyle={{ height: height / 5 }}
             />
             <ChartCard
               title="主要成就"
@@ -143,33 +146,40 @@ export const Home = () => {
               titleStyle={{
                 marginTop: 6,
               }}
-              cardStyle={{ height: height / 2 }}
+              cardStyle={{ 
+                height: height / 3,
+                // marginTop:45,
+                marginTop: "0px",
+                marginBottom: "40px",
+                // marginLeft: "80px" 
+                marginRight: "-130px" 
+              }}
             />
           </div>
-          <div className={styles.center}>
+          <div className={styles.center} style={{ width: centerWidth, height: "96%",marginLeft: "-5px",marginTop: "2px"}}>
             <Maps cardImage={backgrounds[2]} />
           </div>
-          <div className={styles.right} style={{ width: sliderWidth }}>
+          <div className={styles.right} style={{ width: sliderWidthRight, marginLeft: "-45px",height: "85%"}}>
             <ChartCard
               title="词频统计"
               renderChart={renderWordCloud}
               cardImage={backgrounds[3]}
               titleImage={titleBackgrounds[1]}
-              cardStyle={{ height: height / 3 }}
+              cardStyle={{ height: height / 3, width: "90%",  marginLeft: "30px"}}
             />
             <ChartCard
               title="作品数量"
               renderChart={renderSkills}
               cardImage={backgrounds[4]}
               titleImage={titleBackgrounds[1]}
-              cardStyle={{ height: height / 3 }}
+              cardStyle={{ height: height / 3, width: "100%", marginLeft: "20px" }}
             />
             <ChartCard
               title="朋友关系图"
               renderChart={renderRelation}
               cardImage={backgrounds[5]}
               titleImage={titleBackgrounds[1]}
-              cardStyle={{ height: height / 3 }}
+              cardStyle={{ height: height / 3}}
             />
           </div>
         </React.Fragment>

@@ -41,7 +41,7 @@ export const Maps = ({ cardImage }) => {
     const scene = new Scene({
       id: 'map',
       map: new GaodeMap({
-        style: 'dark',
+        style: 'light',
         // style: 'light',
         center: [100, 38],
         zoom: 4,
@@ -53,7 +53,8 @@ export const Maps = ({ cardImage }) => {
     const dotPoint = new PointLayer({ zIndex: 2 })
     .source(mapData)
     .shape('circle')
-    .color('#00FFFF')
+    // .color('#00FFFF')
+    .color('#93420A')
     .animate(true)
     .size(30);
   scene.addLayer(dotPoint);
@@ -118,7 +119,7 @@ export const Maps = ({ cardImage }) => {
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
 
-        ctx.fillText('诗仙的人生足迹', width / 2, height - 80);
+        // ctx.fillText('诗仙的人生足迹', width / 2, height - 80);
       },
     });
     scene.addLayer(canvasLayer);

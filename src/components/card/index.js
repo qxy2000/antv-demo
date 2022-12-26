@@ -19,16 +19,17 @@ export const Card = ({
         ...style,
       }}
     >
-      {showTitle && (
+      {/* {showTitle && (
         <h5
           style={{
             background: `url(${titleImage}) no-repeat 12px`,
+            writingMode: 'vertical-lr',
             ...titleStyle,
           }}
         >
           {title}
         </h5>
-      )}
+      )} */}
 
       <div className={styles.children} style={childrenStyle}>
         {children}

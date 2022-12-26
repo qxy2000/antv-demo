@@ -210,7 +210,7 @@ export const Profile = ({
       style={cardStyle}
     >
       <div className={styles.profile}>
-        <img src={Image} alt="" />
+        {/* <img src={Image} alt="" /> */}
         <NarrativeTextVis spec={spec} />
       </div>
     </Card>
