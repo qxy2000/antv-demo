@@ -8,5 +8,4 @@
 ```
 npm start
 ```
-## 成果图
-![image-20221226192743803](/src/assets/demo.jpg)
+
