@@ -41,7 +41,8 @@ export const Maps = ({ cardImage }) => {
     const scene = new Scene({
       id: 'map',
       map: new GaodeMap({
-        style: 'light',
+        // style: 'light',
+        mapStyle: "amap://styles/fresh",
         // style: 'light',
         center: [100, 38],
         zoom: 4,
