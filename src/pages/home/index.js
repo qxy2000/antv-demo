@@ -136,7 +136,7 @@ export const Home = () => {
               cardStyle={{ height: height / 2 }}
             />
             <ChartCard
-              title="自我评价"
+              title="主要成就"
               renderChart={renderRadar}
               cardImage={backgrounds[1]}
               titleImage={titleBackgrounds[0]}
@@ -151,21 +151,21 @@ export const Home = () => {
           </div>
           <div className={styles.right} style={{ width: sliderWidth }}>
             <ChartCard
-              title="获得荣誉"
+              title="词频统计"
               renderChart={renderWordCloud}
               cardImage={backgrounds[3]}
               titleImage={titleBackgrounds[1]}
               cardStyle={{ height: height / 3 }}
             />
             <ChartCard
-              title="个人技能"
+              title="作品数量"
               renderChart={renderSkills}
               cardImage={backgrounds[4]}
               titleImage={titleBackgrounds[1]}
               cardStyle={{ height: height / 3 }}
             />
             <ChartCard
-              title="导师团队"
+              title="朋友关系图"
               renderChart={renderRelation}
               cardImage={backgrounds[5]}
               titleImage={titleBackgrounds[1]}

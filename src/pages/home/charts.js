@@ -16,39 +16,68 @@ export const renderRadar = ({ container, width, height }) => {
     height,
   });
 
-  const encode = (node) => node.encode('x', 'item').encode('y', 'score');
+  // const encode = (node) => node.encode('x', 'item').encode('y', 'score');
 
-  chart.data(RadarData).coordinate({ type: 'polar' });
-
+  chart.coordinate({ type: 'polar' });
   chart
-    .area()
-    .call(encode)
-    .style('fillOpacity', 0.3)
-    .scale('x', { padding: 0.5 })
-    .axis('y', false)
-    .scale('color', {
-      range: ThemeColor10,
-    })
-    .legend('color', false);
+  .data(RadarData)
+  .scale('x', { padding: 0.5, align: 0 })
+  .scale('y', { tickCount: 5 })
+  .axis('x', { grid: true })
+  .axis('y', { zIndex: 1, title: false });
 
-  chart.line().call(encode).style('lineWidth', 2);
+chart
+  .area()
+  .encode('x', 'item')
+  .encode('y', 'score')
+  .encode('shape', 'smooth')
+  .style('fillOpacity', 0.5);
 
-  chart.point().call(encode).encode('shape', 'point');
+chart
+  .line()
+  .encode('x', 'item')
+  .encode('y', 'score')
+  .encode('shape', 'smooth')
+  .style('lineWidth', 2);
 
-  // @todo Fix this in G2: fail to pass options for arc axis.
-  chart.on('afterrender', () => {
-    const { canvas } = chart.context();
-    const labels = canvas.document.getElementsByClassName('axis-label');
-    for (const label of labels) {
-      label.style.fill = '#fff';
-      label.style.fontSize = 14;
-      label.style.fontWeight = 'bold';
-    }
-    const ticks = canvas.document.getElementsByClassName('axis-tick');
-    for (const tick of ticks) {
-      tick.style.opacity = 0;
-    }
-  });
+  // chart.data(RadarData).coordinate({ type: 'polar' });
+
+  // chart
+  //   .area()
+  //   .call(encode)
+  //   .style('fillOpacity', 0.5)
+  //   .scale('x', { padding: 0.5 })
+  //   .axis('y', false)
+  //   .scale('color', {
+  //     range: ThemeColor10,
+  //   })
+  //   .legend('color', false);
+  //   //提问：legend是什么
+  // chart.line().call(encode).style('lineWidth', 2);
+  // chart
+  //   .line()
+  //   .encode('x', 'item')
+  //   .encode('y', 'score')
+  //   .encode('color', 'type')
+  //   .encode('shape', 'smooth')
+  //   .style('lineWidth', 2);
+
+  // chart.point().call(encode).encode('shape', 'point');
+
+  // // @todo Fix this in G2: fail to pass options for arc axis.
+  // chart.on('afterrender', () => {
+  //   const { canvas } = chart.context();
+  //   const labels = canvas.document.getElementsByClassName('axis-label');
+  //   for (const label of labels) {
+  //     label.style.fill = '#fff';
+  //     label.style.fontSize = 14;
+  //     label.style.fontWeight = 'bold';
+  //   }
+  //   const ticks = canvas.document.getElementsByClassName('axis-tick');
+  //   for (const tick of ticks) {
+  //     tick.style.opacity = 0;
+  //   }
+  // });
 
   chart.render();
   return chart;
@@ -63,6 +92,18 @@ export const renderWordCloud = ({ container, width, height }) => {
     paddingRight: 0,
     paddingTop: 0,
     paddingBottom: 0,
+    layout:{
+      spiral: 'circle',
+    },
+    wordStyle: {
+      fontSize: [24, 80],
+    },
+    // 设置交互类型
+    interactions: [
+      {
+        type: 'element-active',
+      },
+    ],
   });
 
   chart
@@ -76,7 +117,7 @@ export const renderWordCloud = ({ container, width, height }) => {
     .encode('text', 'name')
     .encode('color', 'name')
     .encode('rotate', 'rotate')
-    .encode('fontSize', 'size')
+    .encode('fontSize', 'value')
     .encode('title', 'name')
     .encode('tooltip', (d) => d.value.toFixed(2))
     .style('textAlign', 'center')
@@ -90,6 +131,26 @@ export const renderWordCloud = ({ container, width, height }) => {
     .scale('rotate', { type: 'identity' })
     .scale('tooltip', { type: 'identity' });
 
+  // chart
+  //   .wordCloud()
+  //   .data({
+  //     value: WordCloudData,
+  //     transform: [{ type: 'wordCloud', size: [width, height] }],
+  //   })
+  //   .layout({
+  //     spiral: 'rectangular',
+  //   })
+  //   .encode('text', 'name')
+  //   .encode('color', 'name')
+  //   .encode('fontSize', 'value')
+  //   .encode('x', 'x')
+  //   .encode('y', 'y')
+  //   .scale('x', { domain: [9, width], range: [0, 1] })
+  //   .scale('y', { domain: [0, height], range: [0, 1] })
+  //   .scale('color', {
+  //     range: ThemeColor10,
+  //   });
+
   chart.render();
   return chart;
 };
@@ -98,7 +159,7 @@ export const renderSkills = ({ container, width, height }) => {
   const chart = new G2.Chart({
     paddingLeft: 70,
     paddingTop: 10,
-    paddingBottom: 30,
+    paddingBottom: 20,
     container,
     width,
     height,
@@ -121,7 +182,7 @@ export const renderSkills = ({ container, width, height }) => {
     .axis('x', {
       labelFill: '#fff',
       titleFill: '#fff',
-      labelFontSize: 14,
+      labelFontSize: 10,
       title: false,
       labelFontWeight: 'bold',
       tickOpacity: 0,
@@ -135,7 +196,18 @@ export const renderSkills = ({ container, width, height }) => {
       tickCount: 5,
       labelFontWeight: 'bold',
     })
+    .animate('enterType', 'scaleInY')
+    .animate('enterDuration', 3000)
     .legend('color', false);
+
+  chart.interaction(
+    { type: 'tooltip' },
+    {
+      type: 'elementHighlight',
+      highlightedFill: 'orange',
+      unhighlightedOpacity: 0.5,
+    }
+    );
 
   chart.render().node();
   return chart;
@@ -145,78 +217,145 @@ export const renderRelation = ({ container }) => {
   const data = RelationData;
   const width = container.scrollWidth;
   const height = container.scrollHeight || 500;
-  const graph = new G6.TreeGraph({
+  // const graph = new G6.TreeGraph({
+  //   container,
+  //   width,
+  //   height,
+  //   linkCenter: true,
+  //   modes: {
+  //     default: [
+  //       {
+  //         type: 'collapse-expand',
+  //         onChange: function onChange(item, collapsed) {
+  //           const data = item.getModel();
+  //           data.collapsed = collapsed;
+  //           return true;
+  //         },
+  //       },
+  //       'drag-canvas',
+  //       'zoom-canvas',
+  //     ],
+  //   },
+  //   defaultNode: {
+  //     size: 28,
+  //     anchorPoints: [
+  //       [0, 0.5],
+  //       [1, 0.5],
+  //     ],
+  //   },
+  //   defaultEdge: {
+  //     type: 'cubic-vertical',
+  //   },
+  //   layout: {
+  //     type: 'compactBox',
+  //     direction: 'TB',
+  //     getId: function getId(d) {
+  //       return d.id;
+  //     },
+  //     getHeight: function getHeight() {
+  //       return 16;
+  //     },
+  //     getWidth: function getWidth() {
+  //       return 32;
+  //     },
+  //     getVGap: function getVGap() {
+  //       return 80;
+  //     },
+  //     getHGap: function getHGap() {
+  //       return 80;
+  //     },
+  //   },
+  // });
+
+  // graph.node(function (node) {
+  //   let position = 'right';
+  //   let rotate = 0;
+
+  //   return {
+  //     label: node.id,
+  //     labelCfg: {
+  //       position,
+  //       offset: 5,
+  //       style: {
+  //         rotate,
+  //         textAlign: 'start',
+  //         fill: 'white',
+  //         fontSize: 28,
+  //       },
+  //     },
+  //   };
+  // });
+
+  const graph = new G6.Graph({
     container,
     width,
     height,
-    linkCenter: true,
+    layout: {
+      type: 'force',
+      preventOverlap: true,
+    },
     modes: {
-      default: [
-        {
-          type: 'collapse-expand',
-          onChange: function onChange(item, collapsed) {
-            const data = item.getModel();
-            data.collapsed = collapsed;
-            return true;
-          },
-        },
-        'drag-canvas',
-        'zoom-canvas',
-      ],
+      default: ['drag-canvas'],
     },
     defaultNode: {
-      size: 28,
-      anchorPoints: [
-        [0, 0.5],
-        [1, 0.5],
-      ],
+      labelCfg: {
+        style: {
+          background: {
+            fill: '#ffffff',
+            // stroke: 'green',
+            padding: [3, 2, 3, 2],
+            radius: 2,
+            lineWidth: 3,
+          },
+        },
+      }
     },
     defaultEdge: {
-      type: 'cubic-vertical',
-    },
-    layout: {
-      type: 'compactBox',
-      direction: 'TB',
-      getId: function getId(d) {
-        return d.id;
-      },
-      getHeight: function getHeight() {
-        return 16;
-      },
-      getWidth: function getWidth() {
-        return 32;
-      },
-      getVGap: function getVGap() {
-        return 80;
-      },
-      getHGap: function getHGap() {
-        return 80;
-      },
-    },
-  });
-
-  graph.node(function (node) {
-    let position = 'right';
-    let rotate = 0;
-
-    return {
-      label: node.id,
       labelCfg: {
-        position,
-        offset: 5,
+        autoRotate: true,
         style: {
-          rotate,
-          textAlign: 'start',
-          fill: 'white',
-          fontSize: 28,
+          background: {
+            fill: '#ffffff',
+            stroke: '#000000',
+            padding: [2, 2, 2, 2],
+            radius: 2,
+          },
         },
-      },
-    };
+      }
+    }
   });
 
-  graph.data(data);
+  const nodes = data.nodes;
+  graph.data({
+    nodes,
+    edges: data.edges.map(function (edge, i) {
+      edge.id = 'edge' + i;
+      return Object.assign({}, edge);
+    }),
+  });
+  // graph.data(data);
   graph.render();
   graph.fitView();
+
+  graph.on('node:dragstart', function (e) {
+    graph.layout();
+    refreshDragedNodePosition(e);
+  });
+  graph.on('node:drag', function (e) {
+    const forceLayout = graph.get('layoutController').layoutMethods[0];
+    forceLayout.execute();
+    refreshDragedNodePosition(e);
+  });
+  graph.on('node:dragend', function (e) {
+    e.item.get('model').fx = null;
+    e.item.get('model').fy = null;
+  });
+
+  function refreshDragedNodePosition(e) {
+    const model = e.item.get('model');
+    model.fx = e.x;
+    model.fy = e.y;
+  }
 
   if (typeof window !== 'undefined')
     window.onresize = () => {

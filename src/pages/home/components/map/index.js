@@ -42,6 +42,7 @@ export const Maps = ({ cardImage }) => {
       id: 'map',
       map: new GaodeMap({
         style: 'dark',
+        // style: 'light',
         center: [100, 38],
         zoom: 4,
       }),
@@ -50,52 +51,60 @@ export const Maps = ({ cardImage }) => {
     sceneRef.current = scene;
 
     const dotPoint = new PointLayer({ zIndex: 2 })
-      .source(mapData, {
-        parser: {
-          type: 'json',
-          x: 'lng',
-          y: 'lat',
-        },
-      })
-      .shape('circle')
-      .color('#00FFFF')
-      .animate(true)
-      .size(30);
-    scene.addLayer(dotPoint);
+    .source(mapData)
+    .shape('circle')
+    .color('#00FFFF')
+    .animate(true)
+    .size(30);
+  scene.addLayer(dotPoint);
 
-    const lineData = [];
-    for (let i = 0; i < mapData.length - 1; i += 1) {
-      lineData.push({
-        lng1: mapData[i].lng,
-        lat1: mapData[i].lat,
-        lng2: mapData[i + 1].lng,
-        lat2: mapData[i + 1].lat,
-      });
-    }
+    // const dotPoint = new PointLayer({ zIndex: 2 })
+    //   .source(mapData, {
+    //     parser: {
+    //       type: 'json',
+    //       x: 'lng',
+    //       y: 'lat',
+    //     },
+    //   })
+    //   .shape('circle')
+    //   .color('#00FFFF')
+    //   .animate(true)
+    //   .size(30);
+    // scene.addLayer(dotPoint);
 
-    const lineLayer = new LineLayer({ blend: 'normal' })
-      .source(lineData, {
-        parser: {
-          type: 'json',
-          x: 'lng1',
-          y: 'lat1',
-          x1: 'lng2',
-          y1: 'lat2',
-        },
-      })
-      .size(1.5)
-      .shape('greatcircle')
-      .animate({
-        enable: true,
-        interval: 2,
-        trailLength: 1,
-        duration: 5,
-      })
-      .color('#00FFFF')
-      .style({
-        opacity: 0.8,
-      });
-    scene.addLayer(lineLayer);
+    // const lineData = [];
+    // for (let i = 0; i < mapData.length - 1; i += 1) {
+    //   lineData.push({
+    //     lng1: mapData[i].lng,
+    //     lat1: mapData[i].lat,
+    //     lng2: mapData[i + 1].lng,
+    //     lat2: mapData[i + 1].lat,
+    //   });
+    // }
+
+    // const lineLayer = new LineLayer({ blend: 'normal' })
+    //   .source(lineData, {
+    //     parser: {
+    //       type: 'json',
+    //       x: 'lng1',
+    //       y: 'lat1',
+    //       x1: 'lng2',
+    //       y1: 'lat2',
+    //     },
+    //   })
+    //   .size(1.5)
+    //   .shape('greatcircle')
+    //   .animate({
+    //     enable: true,
+    //     interval: 2,
+    //     trailLength: 1,
+    //     duration: 5,
+    //   })
+    //   .color('#00FFFF')
+    //   .style({
+    //     opacity: 0.8,
+    //   });
+    // scene.addLayer(lineLayer);
 
     const canvasLayer = new CanvasLayer({}).style({
       drawingOnCanvas: (option) => {
@@ -109,7 +118,7 @@ export const Maps = ({ cardImage }) => {
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
 
-        ctx.fillText('西天取经之路', width / 2, height - 80);
+        ctx.fillText('诗仙的人生足迹', width / 2, height - 80);
       },
     });
     scene.addLayer(canvasLayer);
