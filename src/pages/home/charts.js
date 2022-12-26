@@ -344,6 +344,10 @@ export const renderRelation = ({ container }) => {
       default: ['drag-canvas'],
     },
     defaultNode: {
+      // style:{
+      //   // fill: 'lightblue',
+      //   stroke: '#888',
+      // },
       labelCfg: {
         style: {
           background: {
@@ -355,6 +359,7 @@ export const renderRelation = ({ container }) => {
             lineWidth: 3,
           },
           // stroke: '#93420A',
+          // fill: '#93420A',
         },
       }
     },
@@ -374,6 +379,16 @@ export const renderRelation = ({ container }) => {
   });
 
   const nodes = data.nodes;
+  const colors = ['#D29634', '#985D31', '#86653A', '#8D7434', '#A39F58', '#8C7E5B', '#B5A488']
+  const strokes = ['#D29634', '#985D31', '#86653A', '#8D7434', '#A39F58', '#8C7E5B', '#B5A488']
+  nodes.forEach((node,index) => {
+    if (!node.style) node.style = {};
+    node.style.fill = colors[index % colors.length];
+    node.style.stroke = strokes[index % strokes.length];
+    // node.x = width / 2 + 200 * (Math.random() - 0.5);
+    // node.y = height / 2 + 200 * (Math.random() - 0.5);
+  });
+
   graph.data({
     nodes,
     edges: data.edges.map(function (edge, i) {
